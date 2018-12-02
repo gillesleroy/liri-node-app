@@ -1,0 +1,66 @@
+--- node liri movie-this predator ---
+Predator
+USA, Mexico
+English, Spanish, Russian
+A team of commandos on a mission in a Central American jungle find themselves hunted by an extraterrestrial warrior.
+Arnold Schwarzenegger, Carl Weathers, Elpidia Carrillo, Bill Duke
+7.8
+80%
+1987
+--- node liri spotify-this-song cry me a river ---
+cry me a river
+https://open.spotify.com/track/7Lf7oSEVdzZqTA0kEDSlS5
+Justin Timberlake
+Cry Me a River
+--- node liri concert-this Rolling Stone ---
+Hard Rock Stadium
+Miami Gardens
+04/24/2019
+NRG Arena
+Houston
+04/28/2019
+State Farm Stadium
+Glendale
+05/07/2019
+Rose Bowl Stadium
+Pasadena
+05/11/2019
+Levi's Stadium
+Santa Clara
+05/18/2019
+CenturyLink Field
+Seattle
+05/22/2019
+Broncos Stadium at Mile High
+Denver
+05/26/2019
+FedEx Field
+Landover
+05/31/2019
+Lincoln Financial Field
+Philadelphia
+06/04/2019
+Gillette Stadium
+Foxborough
+06/08/2019
+MetLife Stadium
+East Rutherford
+06/13/2019
+MetLife Stadium
+East Rutherford
+06/17/2019
+Soldier Field
+Chicago
+06/21/2019
+Soldier Field
+Chicago
+06/25/2019
+04/20/2019
+Jacksonville
+TIAA Bank Field
+--- node liri do-what-it-says  ---
+"I Want it That Way"
+
+Backstreet Boys
+I Want It That Way
+https://open.spotify.com/track/6e40mgJiCid5HRAGrbpGA6

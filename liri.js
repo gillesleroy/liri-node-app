@@ -13,8 +13,13 @@ var spotify = new Spotify(keys.spotify);
 //   });
 var args = process.argv;
 var command = args[2];
+var nodeThis = args[0].split("/");
+var nodeCom = nodeThis[nodeThis.length-1];
+var liri = args[1].split("/");
+var liriCom = liri[liri.length-1];
 // var name = args[3];
 var term = args.slice(3).join(" ");
+var fullComm = "--- "+nodeCom+" "+liriCom+" "+command+" "+term+" ---";
 
 function concert()
 {
@@ -30,6 +35,7 @@ function concert()
   //       console.log(body);
   //     }
   //   });
+  addLog(fullComm);
   axios.get(queryURL)
   .then(
     function(response) {
@@ -37,8 +43,8 @@ function concert()
       //console.log("The movie's rating is: " + response.data.imdbRating);
       for (var i = 0; i<response.data.length;i++)
       {
-      console.log(response.data[i].venue.name);
-      console.log(response.data[i].venue.city);
+      addLog(response.data[i].venue.name);
+      addLog(response.data[i].venue.city);
       // console.log(response.data[i].datetime);
       // 2018-12-02T01:15:19+00:00
       // 2018-12-02T01:15:19Z
@@ -48,10 +54,10 @@ function concert()
       var day = moment(response.data[i].datetime,moment.ISO_8601);
       if (moment(response.data[i].datetime,moment.ISO_8601).isValid)
       {
-        console.log(day.format("MM/DD/YYYY"));
+        addLog(day.format("MM/DD/YYYY"));
       }
       else {
-        console.log("Invalid");
+        addLog("Invalid");
       }
       // console.log(moment(response.data[i].datetime,moment.ISO_8601).isValid);
       }
@@ -63,22 +69,22 @@ function concert()
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        addLog(error.response.data);
+        addLog(error.response.status);
+        addLog(error.response.headers);
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an object that comes back with details pertaining to the error that occurred.
-        console.log(error.request);
+        addLog(error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log("Error", error.message);
+        addLog("Error", error.message);
       }
-      console.log(error.config);
+      addLog(error.config);
     });
   } 
-
 function spot() {
+  addLog(fullComm);
   if (!term){
     term = "The Sign";
   }
@@ -88,62 +94,71 @@ function spot() {
     }
   // console.log(data); 
   // console.log(data.tracks.items[0]); 
-  console.log(term);
+  addLog(term);
   for (var i =0; i< data.tracks.items[0].artists.length; i++)
   {
-    console.log(data.tracks.items[0].artists[i].name); 
+    addLog(data.tracks.items[0].artists[i].name); 
   }
-  console.log(data.tracks.items[0].name); 
-  console.log(data.tracks.items[0].external_urls.spotify); 
+  addLog(data.tracks.items[0].name); 
+  addLog(data.tracks.items[0].external_urls.spotify); 
   });
 }
+function addLog(text){
+  console.log(text);
+  fs.appendFile("log.txt", text+"\n", function(err) {
+      if (err) throw err;
+    });
+}
+      
 function movie(){
+  addLog(fullComm);
   if (!term){
     term = "Mr. Nobody";
   }
+  // addLog(args[0]+" "+args[1]+" "+args[2]+" "+term);
   var queryURL = "https://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy";
   axios.get(queryURL)
   .then(
     function(response) {
             var isFound = false;
             // console.log(response.data);
-            console.log(response.data.Title);
-            console.log(response.data.Year);
-            console.log(response.data.imdbRating);
+            addLog(response.data.Title);
+            addLog(response.data.Year);
+            addLog(response.data.imdbRating);
             for (var i = 0; i<response.data.Ratings.length;i++)
             {
             if (response.data.Ratings[i].Source === "Rotten Tomatoes")
               {
-                console.log(response.data.Ratings[i].Value);
+                addLog(response.data.Ratings[i].Value);
                 isFound = true;
                 break;
                }
             }   
             if (!isFound){
-              console.log("N/A");
+              addLog("N/A");
             }        
-            console.log(response.data.Country);
-            console.log(response.data.Language);
-            console.log(response.data.Plot);
-            console.log(response.data.Actors);
+            addLog(response.data.Country);
+            addLog(response.data.Language);
+            addLog(response.data.Plot);
+            addLog(response.data.Actors);
     }
   )
   .catch(function(error) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
+        addLog(error.response.data);
+        addLog(error.response.status);
+        addLog(error.response.headers);
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an object that comes back with details pertaining to the error that occurred.
-        console.log(error.request);
+        addLog(error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log("Error", error.message);
+        addLog("Error", error.message);
       }
-      console.log(error.config);
+      addLog(error.config);
     });
 }
 
@@ -157,19 +172,14 @@ if (command === "spotify-this-song")
 if (command === "movie-this") {
    movie();
   }  
-
-  if (command === "do-what-it-says"){
-    fs.readFile('random.txt', 'utf8', function(err, data) {
-      if (err) throw err;
-      var dataArr = data.split(",");
-      console.log(dataArr);
-      if (dataArr[0] === "spotify-this-song"){
-        term = dataArr[1];
-        spot();
-      }
-    });
-    // fs.appendFile("random.txt", showData + divider, function(err) {
-    //   if (err) throw err;
-     
-    // });
-  }
+if (command === "do-what-it-says"){
+  fs.readFile('random.txt', 'utf8', function(err, data) {
+    if (err) throw err;
+    var dataArr = data.split(",");
+    // console.log(dataArr);
+    if (dataArr[0] === "spotify-this-song"){
+      term = dataArr[1];
+      spot();
+    }
+  });
+}
