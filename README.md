@@ -12,5 +12,7 @@
 * node liri do-what-it-says
 ### The latest command above will use the file random.txt as the node liri input.
 ![GitHub Logo](./ScreenShot_1.png)
-Format: ![Alt Text](url)
+![GitHub Logo](./ScreenShot_2.png)
+![GitHub Logo](./ScreenShot_3.png)
+
 
